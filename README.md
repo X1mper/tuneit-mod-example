@@ -1,3 +1,11 @@
-# tuneit-mod-example
+# TuneIt! Как никогда прежде!
 
 Это пример модуля для TuneIt приложения
+
+![](./assets/image.png)
+
+Скриншот пример
+
+И конечно же Перформанс!
+
+![](./assets/image2.png)
