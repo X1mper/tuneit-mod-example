@@ -1,5 +1,6 @@
 - name: "Example"
   description: This is only example. Only!
+  cover: assets/cover.png
   weight: 30
   sections:
     - name: Themes
