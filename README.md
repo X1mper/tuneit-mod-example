@@ -1,1 +1,3 @@
-# tuneit-mode-example
+# tuneit-mod-example
+
+Это пример модуля для TuneIt приложения
