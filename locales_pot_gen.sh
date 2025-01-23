@@ -1,25 +1,26 @@
 #!/usr/bin/bash
 
-YAML_FILE="module.yaml"
+MAIN_YAML_FILE="module.yaml"
 POT_FILE="./po/module.pot"
+ADDITIONAL_YAML_DIR="./sections"
+
+echo "" > "$POT_FILE"
 
 add_message() {
     local msg="$1"
+    local file="$2"
+    local line_num="$3"
     if [[ -n "$msg" ]]; then
+        echo "#: $file:$line_num" >> "$POT_FILE"
         echo "msgid \"$msg\"" >> "$POT_FILE"
         echo "msgstr \"\"" >> "$POT_FILE"
         echo "" >> "$POT_FILE"
     fi
 }
 
-# Создание или очистка POT файла
-> "$POT_FILE"
-
-
-# Добавление заголовка в POT файл
 add_header() {
     {
-        echo "#: $YAML_FILE"
+        echo "#: $MAIN_YAML_FILE"
         echo "msgid \"\""
         echo "msgstr \"\""
         echo "\"Project-Id-Version: My Project 1.0\\n\""
@@ -35,25 +36,41 @@ add_header() {
     } > "$POT_FILE"
 }
 
+process_file() {
+    local file="$1"
+    local matches
+    matches=$(grep -noP '_[^:"]*' "$file")
+
+    if [[ -z "$matches" ]]; then
+        echo "В файле '$file' не найдено строк с символом '_'."
+    else
+        echo "Обработка файла: $file"
+        echo "$matches"
+
+        while IFS= read -r match; do
+            local line_num=$(echo "$match" | cut -d: -f1)
+            local line_content=$(echo "$match" | cut -d: -f2-)
+            local key=$(echo "$line_content" | sed 's/^_//; s/"$//')
+
+            if [[ -n "$key" ]]; then
+                echo "Добавляем в POT: $key из файла $file:$line_num"
+                add_message "$key" "$file" "$line_num"
+            fi
+        done <<< "$matches"
+    fi
+}
+
 add_header
 
-matches=$(grep -oP '_[^:]*' "$YAML_FILE")
+process_file "$MAIN_YAML_FILE"
 
-if [[ -z "$matches" ]]; then
-    echo "Не найдено строк с символом '_'."
+if [[ -d "$ADDITIONAL_YAML_DIR" ]]; then
+    for yaml_file in "$ADDITIONAL_YAML_DIR"/*.{yml,yaml}; do
+        [[ -e "$yaml_file" ]] || continue
+        process_file "$yaml_file"
+    done
 else
-    echo "Найдено строки с символом '_':"
-    echo "$matches"
+    echo "Дополнительная папка '$ADDITIONAL_YAML_DIR' не найдена."
 fi
-
-while IFS= read -r line; do
-    key=$(echo "$line" | sed 's/^_//; s/"$//')
-
-    if [[ -n "$key" ]]; then
-        echo "Добавляем в POT: $key"
-        
-        add_message "$key"
-    fi
-done <<< "$matches"
 
 echo "Генерация POT файла завершена. Результат сохранен в '$POT_FILE'."
