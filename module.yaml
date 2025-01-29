@@ -10,4 +10,5 @@
     - name: "_Power"
       icon: battery-symbolic
       icon: preferences-system-symbolic
- 
+    - name: "_Keyboard"
+      icon: input-keyboard-symbolic

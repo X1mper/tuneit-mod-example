@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: My Project 1.0\n"
 "Report-Msgid-Bugs-To: bugs@example.com\n"
-"POT-Creation-Date: Thu, 23 Jan 2025 10:16:20 +0000\n"
-"PO-Revision-Date: 2025-01-23 13:18+0300\n"
+"POT-Creation-Date: Sat, 25 Jan 2025 23:37:02 +0000\n"
+"PO-Revision-Date: 2025-01-26 02:37+0300\n"
 "Last-Translator: \n"
 "Language-Team: Russian <ru@example.com>\n"
 "Language: ru_RU\n"
@@ -24,6 +24,10 @@ msgstr "Дата и время"
 #: module.yaml:10
 msgid "Power"
 msgstr "Питание"
+
+#: module.yaml:13
+msgid "Keyboard"
+msgstr "Клавиатура"
 
 #: sections/main.yml:1
 msgid "Themes"
@@ -72,6 +76,22 @@ msgstr "Батарея"
 #: sections/main.yml:44
 msgid "Show percentage"
 msgstr "Показывать проценты"
+
+#: sections/keyboard.yaml:1
+msgid "Lang"
+msgstr "Язык"
+
+#: sections/keyboard.yaml:5
+msgid "Switch language shortcut"
+msgstr "Комбинация для смены раскладки клавиатуры"
+
+#: sections/keyboard.yaml:10
+msgid "path"
+msgstr ""
+
+#: sections/keyboard.yaml:11
+msgid "name"
+msgstr ""
 
 #: sections/performance.yaml:1
 msgid "Performance"
